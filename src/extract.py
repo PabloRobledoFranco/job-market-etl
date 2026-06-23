@@ -47,3 +47,4 @@ if __name__ == "__main__":
     raw_path = "data/raw"
     extract_all(raw_path)
     logger.info("Data extraction completed successfully")
+    
