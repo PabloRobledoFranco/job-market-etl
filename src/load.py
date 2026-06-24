@@ -1,5 +1,6 @@
 import logging
 import pandas as pd
+import os
 
 #Config Logger
 logging.basicConfig(
@@ -10,6 +11,7 @@ logger=logging.getLogger(__name__)
 
 def save_csv(df, path, name):
     logger.info(f"Saving {name} to: {path}")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     try:
         df.to_csv(path, index=False)
     except Exception as e:
@@ -19,4 +21,23 @@ def save_csv(df, path, name):
     logger.info(f"{name} shape: {df.shape}")
 
 def load_all(cleaned_df, expanded_skills_df, processed_path):
+    logger.info("Starting to load dataframes to CSV files")
     
+    save_csv(cleaned_df, f"{processed_path}/expanded_skills.csv", "Cleaned Jobs DataFrame")
+    save_csv(expanded_skills_df[["job_link", "job_skills"]], f"{processed_path}/expanded_skills.csv", "Expanded Skills DataFrame")
+    logger.info("All dataframes loaded successfully to CSV files")
+
+if __name__ == "__main__":
+    from transform import transform_all
+    from extract import extract_all
+
+    raw_path = "data/raw"
+    processed_path = "data/processed"
+
+    jobs_df, skills_df, summary_df = extract_all(raw_path)
+    
+    cleaned_df, expanded_skills_df = transform_all(jobs_df, skills_df, summary_df)
+    
+    load_all(cleaned_df, expanded_skills_df, processed_path)
+
+    logger.info("Data loading process completed successfully")
