@@ -1,7 +1,6 @@
 import logging
 import pandas as pd
 import os
-import mysql.connector
 from sqlalchemy import create_engine 
 from dotenv import load_dotenv
 
@@ -30,20 +29,6 @@ def load_all(cleaned_df, expanded_skills_df, processed_path):
     save_csv(expanded_skills_df[["job_link", "job_skills"]], f"{processed_path}/expanded_skills.csv", "Expanded Skills DataFrame")
     logger.info("All dataframes loaded successfully to CSV files")
 
-def get_mysql_conection(host, user, password, database):
-    logger.info(f"Connecting to MySQL database: {database} at {host} with user {user}")
-    try:
-        connection = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password,
-            database=database
-        )
-        logger.info("MySQL connection established successfully")
-        return connection
-    except mysql.connector.Error as e:
-        logger.error(f"Error connecting to MySQL, Error: {e}")
-        raise
 
 def load_to_mysql(cleaned_df, expanded_skills_df, user, password, host="localhost", database="job_market"):
     logger.info("Loading dataframes to MySQL database")
