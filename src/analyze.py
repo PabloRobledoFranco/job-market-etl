@@ -57,7 +57,7 @@ def top_job_titles(engine):
 
 def skills_by_seniority(engine):
     query ="""
-    SELECT * FROM (
+    SELECT job_skills, job_level, amount FROM (
         SELECT 
         expanded_skills.job_skills, 
         cleaned_jobs.job_level, 
@@ -73,7 +73,7 @@ def skills_by_seniority(engine):
 
 def skills_by_country_group(engine):
     query ="""
-    SELECT * FROM (
+    SELECT job_skills, country_group, amount FROM (
         SELECT expanded_skills.job_skills,
             CASE
             WHEN cleaned_jobs.search_country = 'united states' THEN 'united states'
