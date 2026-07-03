@@ -10,6 +10,7 @@ End-to-end ETL pipeline that pulls 12,217 data science job postings from LinkedI
 
 ## Pipeline Architecture
 
+```
 data/raw/
     (3 CSV files)
         - job_posting.csv
@@ -24,14 +25,16 @@ load.py →→ Export processed CSVs → load to MySQL
 ↓
 MySQL Database
     - cleaned_jobs (~ 12.000 rows)
-    - expande_skills(~ 314.000 rows)
+    - expanded_skills (~ 314.000 rows)
 ↓
 queries.sql →→ 4 analytical SQL queries
 ↓
 analyze.py →→ Execute queries and display results
+```
 
 ## Project Structure
 
+```
 job-market-etl/
 ├── data/
 │   ├── raw/              ← Original Kaggle CSVs (not tracked by git)
@@ -47,6 +50,7 @@ job-market-etl/
 ├── .env                  ← MySQL credentials (not tracked by git)
 ├── requirements.txt
 └── README.md
+```
 
 ## How to Run
 
